@@ -1,0 +1,323 @@
+body {
+    /* max-width: 1100px; */
+    margin: auto;
+    font-family: "Kanit";
+    background-color: rgb(218,217,212);
+}
+h1 {
+    display: flex;
+    align-items: center;
+}
+.logoAndBar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    box-shadow: 0px 5px 3px grey;
+}
+.fixed{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: rgb(218,217,212);
+}
+i{
+    font-size: large;
+}
+.bars {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.navbars ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    background-color: #4091aecb;
+    backdrop-filter: blur(10px);
+    position: fixed;
+    right: 0;
+    left: 0;
+    transform: translateY(-200%);
+    opacity: 0;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+.navbars ul.mobileBar{
+    border-radius: 25px;
+    margin: 5px;
+}
+.navbars li{
+    list-style-type: none;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    display: flex;
+    justify-content: center;
+    border-radius: 25px;
+}
+.navbars a {
+    text-decoration: none;
+    color: black;
+}
+.navbars.show ul{
+    transform: translateY(0);
+    opacity: 1;
+}
+.desktopBars{
+    display: flex;
+    align-items: center;
+}
+.desktopBars ul{
+    display: flex;
+    padding: 0;
+}
+.desktopBars li{
+    list-style-type: none;
+}
+.desktopBars a{
+    text-decoration: none;
+    color: black;
+    padding: 2rem;  
+}
+.desktopBars a:hover {
+    background-color: rgb(136, 135, 133);
+    transition: 0.25s;
+    border-radius: 25px;
+}
+.desktopBars{
+    display: none;
+}
+
+.topContent, .midContent{
+    margin: 1rem;
+}
+.appointmentBtn{ /* appointment button */
+    text-decoration: none;
+    color: black;
+    background-color: #4091aecb;
+    padding: 1rem;
+    transition: 0.25s;
+    border-radius: 20px;
+}
+.appointmentBtn:hover{
+    background-color: #bc032b;
+    color: white;
+    transition: 0.25s;
+}
+.midContent{
+    text-align: center;
+}
+.big{
+    display: flex;
+    justify-content: center;
+    margin-top: 0;
+    margin-bottom: 0;
+    color: #bc032b;
+}
+.small {
+    margin-top: 0;
+    margin-bottom: 1;
+}
+/* This is where I do 2nd part */
+.midContent span a{
+    text-decoration: none;
+    color: #bc032b;
+}
+.midContentTwo{
+    background-color: rgba(31, 44, 52, 255);
+    color: rgb(218,217,212);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.subdiv > img {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    height: auto;
+    width: 100%;
+    max-width: 365px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+.subdiv .title{
+    font-size: 1.5rem;
+    font-weight: 600;
+    padding-left: 2rem;
+    margin-bottom: 5px;
+    color: #5ccbf3cb;
+}
+.subdiv .desc{
+    max-width: 400px;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    margin-top: 0;
+    margin-bottom: 2rem;
+}
+/* This is where I style mid content 3 (cars and rentals section) */
+.midContentThree{
+    background-color: #7d8383;
+    padding-bottom: 2rem;
+    padding: 1rem;
+}
+.midContentThree h3{
+    text-align: center;
+}
+.midContentThree h3:last-of-type{
+    margin-bottom: 2rem;
+}
+h3 span{
+    font-weight: 300;
+}
+.removeBg{
+    margin-top: 0;
+    padding-top: 2rem;
+}
+.buttons{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.carBtn{
+    text-decoration: none;
+    padding: 1rem;
+    margin: 20px;
+    color: black;
+    background-color: #d2d3d6;
+    border-radius: 20px;
+    text-align: center;
+    transition: transform 0.5s;
+}
+.midContentThree .icons{
+    font-size: 9rem; 
+    display: flex; 
+    justify-content: center;
+    color: rgba(31, 44, 52, 255);
+}
+.carBtn:hover{
+    transform: scale(1.20, 1.20);
+}
+/* This is where i make footer elements */
+.midContentFour{
+    margin: 0;
+    padding: 2rem;
+}
+.footerLinks a{
+    text-decoration: none;
+    color: black;
+}
+.logoLinks{
+    display: flex;
+    justify-content: center;
+}
+.logoLinks i{
+    font-size: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin-bottom: 2rem;
+}
+.logoLinks i:not(i:last-child){
+    border-right: 1px solid black;
+}
+/* this is where I style the "cars.html" */
+.carListing img{
+    width: 100%;
+    max-width: 220px;
+    max-height: 110px;
+    border-radius: 20px;
+}
+.carListing{
+    padding: 0.5rem;
+    background-color: #7d8383;
+    border-radius: 25px;
+}
+.carTotal{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+.carTotal a{
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.carsContent{
+    margin: 1rem;
+}
+.constr{
+    font-size: 4rem;
+}
+.apt{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.carsHTML{
+    background-color: #7d8383;
+}
+h4{
+    margin-top: 0;
+}
+@media all and (min-width:768px) {
+    .navbars{
+        display: none;
+    }
+    .bars{
+        display: none;
+    }
+    .desktopBars{
+        display: flex;
+    }
+    .left-col{
+        width: 70%;
+        margin-right: 1rem;
+    }
+    .right-col{
+        width: 30%;
+        margin-top: 10rem;
+        margin-left: 1rem;
+        height: 40%;
+        border-radius: 20px;
+    }
+    .content{
+        display: flex;
+        flex-direction: row;
+        max-width: 1100px;
+        margin: auto;
+    }
+    .footer{
+        max-width: 1100px;
+        margin: auto;
+        
+    }
+    .horizon{
+        display: flex;
+        justify-content: space-evenly;
+    }
+    .inMidContent{
+        display: flex;
+        justify-content: space-between;
+    }
+    h1.mid{
+        font-size: 3rem;
+    }
+    .carsContent{
+        margin: 2rem;
+    }
+    .carTotal{
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+    .carListing img{
+        max-width: 250px;
+        max-height: 160px;
+    }
+    .subdiv > img {
+        max-width: 500px;
+    }
+}

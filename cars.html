@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1 Stop Auto-Shop</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="index.js" defer></script>
+    <script src="https://kit.fontawesome.com/fd55908e0f.js" crossorigin="anonymous"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    </style>
+</head>
+<header class="fixed">
+    <div class="logoAndBar">
+        <img src="./images/logo.jpg" alt="logo" style="width: 130px; height: 110px;">
+        <h1 class="headName">1 Stop Auto-Shop</h1>
+        <div class="desktopBars">
+            <ul>
+                <li class="hideOnMobile"><a href="index.html">Home</a></li>
+                <li class="hideOnMobile"><a href="cars.html">Cars</a></li>
+                <li class="hideOnMobile"><a href="./index.html#Services">Services</a></li>
+                <li class="hideOnMobile"><a href="#">Parts</a></li>
+            </ul>
+        </div>
+        <div class="bars" id="hamburger">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </div>
+    <div class="navbars" id="navbars">
+        <nav>
+            <ul class="mobileBar">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="cars.html">Cars</a></li>
+                <li><a href="#Services">Services</a></li>
+                <li><a href="#">Parts</a></li>
+            </ul>
+        </nav>
+    </div>  
+</header>
+<br><br><br><br><br>
+<body>
+    <main>
+        <div class="carsContent">
+            <h1>Cars Available (12)</h1>
+        
+            <div class="carTotal">
+                
+                <div class="carListing sedans"><a href="#">
+                    <img src="./images/coupe1.jpg" alt="sedan2">
+                    <!-- https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Honda_Civic_e-HEV_Sport_(XI)_%E2%80%93_f_30062024.jpg/280px-Honda_Civic_e-HEV_Sport_(XI)_%E2%80%93_f_30062024.jpg -->
+                    <h3>Honda Civic</h3>
+                    <h4>Used: $18,000</h4>
+                </a>
+                </div>
+                <div class="carListing coupe"><a href="#">
+                    <img src="./images/coupe3.jpg" alt="coupe2">
+                    <!-- https://upload.wikimedia.org/wikipedia/commons/d/d1/1994_Honda_Civic_Coupe_1.5_DXI_%288094207749%29.jpg -->
+                    <h3>Honda Civic (Coupe)</h3>
+                    <h4>New: $25,000</h4>
+                </a></div>
+                <div class="carListing SUV"><a href="#">
+                    <img src="./images/SUV1.jpg" alt="SUV1">
+                    <!-- https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Geneva_International_Motor_Show_2018,_Le_Grand-Saconnex_(1X7A1439).jpg/640px-Geneva_International_Motor_Show_2018,_Le_Grand-Saconnex_(1X7A1439).jpg -->
+                    <h3>Hyundai Kona</h3>
+                    <h4>New: $28,000</h4>
+                </a>
+                </div>
+                <div class="carListing hatch"><a href="#">
+                    <img src="./images/hatch1.jpg" alt="hatch1">
+                    <!-- https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Honda_FIT_HYBRID%E3%83%BBL_Honda_SENSING_%28DAA-GP5%29_front.jpg/800px-Honda_FIT_HYBRID%E3%83%BBL_Honda_SENSING_%28DAA-GP5%29_front.jpg?20170718104914 -->
+                    <h3>Honda Fit</h3>
+                    <h4>Used: $16,500</h4>
+                </a>
+                </div>
+                <div class="carListing SUV"><a href="#">
+                    <img src="./images/SUV2.jpg" alt="SUV2">
+                    <!-- https://www.autoblog.com/.image/ar_16:9,c_fill,cs_srgb,fl_progressive,q_auto:good,w_1200/MjA5MTMwNDc2NzE0MDc1NzYw/image-placeholder-title.jpg -->
+                    <h3>Jeep Grand Cherokee</h3>
+                    <h4>New: $45,000</h4>
+                </a>
+                </div>
+                <div class="carListing sports"><a href="#">
+                    <img src="./images/sports1.jpg" alt="sports1">
+                    <!-- https://upload.wikimedia.org/wikipedia/commons/5/53/2022_Subaru_BRZ_2.4_EyeSight.jpg -->
+                    <h3>Subaru BRZ</h3>
+                    <h4>Used: $27,500</h4>
+                </a>
+                </div>
+                <div class="carListing coupe"><a href="#">
+                    <img src="./images/coupe2.jpg" alt="coupe1">
+                    <!-- https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Bonhams_-_The_Paris_Sale_2012_-_Porsche_912_%27SWB%27_Coup%C3%A9_-_1967_-_014.jpg/800px-Bonhams_-_The_Paris_Sale_2012_-_Porsche_912_%27SWB%27_Coup%C3%A9_-_1967_-_014.jpg?20120211054529 -->
+                    <h3>Porsche 911</h3>
+                    <h4>Used: $90,000</h4>
+                </a>
+                </div>
+                <div class="carListing EV"><a href="#">
+                    <img src="./images/ev1.jpg" alt="ev1">
+                    <!-- https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/2019_Toyota_Prius_Business_Edition%2B_PHEV_1.8.jpg/800px-2019_Toyota_Prius_Business_Edition%2B_PHEV_1.8.jpg?20190621234226 -->
+                    <h3>Toyota Prius EV</h3>
+                    <h4>New: $32,000</h4>
+                </a>
+                </div>
+                <div class="carListing sports"><a href="#">
+                    <img src="./images/sports2.jpg" alt="sports2">
+                    <!-- https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSmb9n56hWrXvyCbnmPmf-0BBlmsL-kTbJSYpz3EiaQpf6khhl7 -->
+                    <h3>Toyota Supra</h3>
+                    <h4>Used: $50,000</h4>
+                </a>
+                </div>
+                <div class="carListing sedans"><a href="#">
+                    <img src="./images/sedan1.jpg" alt="sedan1">
+                    <!-- https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcStJm8IXMaAAXtMfrxT1I66X9XbLvvyW0pM832AQiRfYswOQ2S7 -->
+                    <h3>Toyota Corolla</h3>
+                    <h4>Used: $20,000</h4>
+                </a>
+                </div>
+                <div class="carListing EV"><a href="#">
+                    <img src="./images/ev2.jpg" alt="ev2">
+                    <!-- https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1r2BX60o-RJCQI7MilVIQv5CFCgvPK2T1VCup0NgAraoNgbaj -->
+                    <h3 id="sedan">Tesla Model Y</h3>
+                    <h4>New: $58,000</h4>
+                </a>
+                </div>
+                <div class="carListing hatch"><a href="#">
+                    <img src="./images/hatch2.jpg" alt="hatch2">
+                    <!-- https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRAMwrBan6KU3t6YFwN7s-A_PyQ9AUIEDKytn3-hn1bbtV1wExB -->
+                    <h3>Toyota Corolla Hatchback</h3>
+                    <h4>New: $23,500</h4>
+                </a>
+                </div>
+            </div>
+
+            <br><br>
+            <h1>Sedans</h1>
+                <div class="carTotal">
+                    <div class="carListing sedans"><a href="#">
+                        <img src="./images/sedan1.jpg" alt="sedan1">
+                        <h3 id="coupe">Toyota Corolla</h3>
+                        <h4>Used: $20,000</h4>
+                    </a>
+                    </div>
+                    <div class="carListing sedans"><a href="#">
+                        <img src="./images/coupe1.jpg" alt="sedan2">
+                        <h3>Honda Civic</h3>
+                        <h4>Used: $18,000</h4>
+                    </a>
+                    </div>
+                </div>
+
+            <br><br>
+            <h1>Coupe</h1>
+                <div class="carTotal">
+                    <div class="carListing coupe"><a href="#">
+                        <img src="./images/coupe2.jpg" alt="coupe1">
+                        <h3 id="suv">Porsche 911</h3>
+                        <h4>Used: $90,000</h4>
+                    </a>
+                    </div>
+                    <div class="carListing coupe"><a href="#">
+                        <img src="./images/coupe3.jpg" alt="coupe2">
+                        <h3>Honda Civic (Coupe)</h3>
+                        <h4>New: $25,000</h4>
+                    </a></div>
+                </div>
+
+            <br><br>
+            <h1>SUV</h1>
+                <div class="carTotal">
+                    <div class="carListing SUV"><a href="#">
+                        <img src="./images/SUV1.jpg" alt="SUV1">
+                        <h3 id="sports">Hyundai Kona</h3>
+                        <h4>New: $28,000</h4>
+                    </a>
+                    </div>
+                    <div class="carListing SUV"><a href="#">
+                        <img src="./images/SUV2.jpg" alt="SUV2">
+                        <h3>Jeep Grand Cherokee</h3>
+                        <h4>New: $45,000</h4>
+                    </a>
+                    </div>
+                </div>
+            
+            <br><br>
+            <h1>Sports</h1>
+                <div class="carTotal">
+                    <div class="carListing sports"><a href="#">
+                        <img src="./images/sports1.jpg" alt="sports1">
+                        <h3 id="ev">Subaru BRZ</h3>
+                        <h4>Used: $27,500</h4>
+                    </a>
+                    </div>
+                    <div class="carListing sports"><a href="#">
+                        <img src="./images/sports2.jpg" alt="sports2">
+                        <h3>Toyota Supra</h3>
+                        <h4>Used: $50,000</h4>
+                    </a>
+                    </div>
+                </div>
+            
+            <br><br>
+            <h1>EV</h1>
+                <div class="carTotal">
+                    <div class="carListing EV"><a href="#">
+                        <img src="./images/ev1.jpg" alt="ev1">
+                        <h3 id="hatch">Toyota Prius EV</h3>
+                        <h4>New: $32,000</h4>
+                    </a>
+                    </div>
+                    <div class="carListing EV"><a href="#">
+                        <img src="./images/ev2.jpg" alt="ev2">
+                        <h3>Tesla Model Y</h3>
+                        <h4>New: $58,000</h4>
+                    </a>
+                    </div>
+                </div>
+
+            <br><br>
+            <h1>Hatchback</h1>
+                <div class="carTotal">
+                    <div class="carListing hatch"><a href="#">
+                        <img src="./images/hatch1.jpg" alt="hatch1">
+                        <h3>Honda Fit</h3>
+                        <h4>Used: $16,500</h4>
+                    </a>
+                    </div>
+                    <div class="carListing hatch"><a href="#">
+                        <img src="./images/hatch2.jpg" alt="hatch2">
+                        <h3>Toyota Corolla Hatchback</h3>
+                        <h4>New: $23,500</h4>
+                    </a>
+                    </div>
+                </div>
+        </div>
+        <br><br>
+    </div>
+</main>
+</body>
+<footer class="carsHTML">
+    <div class="midContentFour footer">
+        <h2 style="text-align: center;">Get in Touch</h2>
+    <div class="horizon">
+        <div class="contInfo">
+            <i class="fa-solid fa-location-dot"></i> <span style="margin-left: 1rem;">123 Main Street, Auto City, Canada</span>
+            <br>
+            <br>
+            <i class="fa-solid fa-phone"></i><span style="margin-left: 1rem;">123-456-7890</span>
+            <br><br>
+            <i class="fa-regular fa-envelope"></i><span style="margin-left: 1rem;">info@1stopautoshop.com</span>
+        </div>
+
+        <br><br>
+        <div>
+        <h3 style="margin-top: 0;">Quick Links</h3>
+        <ul class="footerLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="cars.html">Cars</a></li>
+            <li><a href="#Services">Services</a></li>
+            <li><a href="./parts.html">Parts</a></li>
+        </ul>
+        </div>
+    </div>
+</div>
+<div class="logoLinks">
+    <i class="fa-brands fa-facebook"></i> 
+    <i class="fa-brands fa-instagram"></i>
+    <i class="fa-brands fa-x-twitter"></i>
+    <i class="fa-brands fa-tiktok"></i>
+</footer>
+</html>
