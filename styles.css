@@ -264,6 +264,25 @@ h3 span{
 h4{
     margin-top: 0;
 }
+
+/* ALL NEW CSS STYLES FOR 2030 MUST BE MADE HERE!!!!!! */
+.appointmentBtnPhp{
+    background-color: blue;
+    color: black;
+    background-color: #4091aecb;
+    padding: 1rem;
+    transition: 0.25s;
+    border-radius: 20px;
+    font-family: 'Kanit';
+    border: none;
+    cursor: pointer;
+}
+.appointmentBtnPhp:hover{
+    background-color: #bc032b;
+    color: white;
+    transition: 0.25s;
+}
+
 @media all and (min-width:768px) {
     .navbars{
         display: none;
