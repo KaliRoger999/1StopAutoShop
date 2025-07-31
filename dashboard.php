@@ -2,7 +2,6 @@
 session_start();
 require_once 'database.php';
 
-// Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();
@@ -12,7 +11,6 @@ $username = $_SESSION['username'];
 $success_message = '';
 $error_message = '';
 
-// Handle status updates
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_status'])) {
     $appointment_id = $_POST['appointment_id'];
     $new_status = $_POST['status'];
@@ -29,12 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_status'])) {
     }
 }
 
-// Get filters from URL
 $status_filter = $_GET['status'] ?? '';
 $date_filter = $_GET['date'] ?? '';
 $search = $_GET['search'] ?? '';
 
-// Build query with filters
+// ================== GET SQL QUERY WITH FILTERS ===================== //
 $pdo = db_connect();
 $sql = "SELECT * FROM appointments WHERE 1=1";
 $params = [];
@@ -65,28 +62,22 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 $appointments = $stmt->fetchAll();
 
-// Get statistics
 $total_count = $pdo->query("SELECT COUNT(*) FROM appointments")->fetchColumn();
 $pending_count = $pdo->query("SELECT COUNT(*) FROM appointments WHERE status = 'pending'")->fetchColumn();
 $confirmed_count = $pdo->query("SELECT COUNT(*) FROM appointments WHERE status = 'confirmed'")->fetchColumn();
 $today_count = $pdo->query("SELECT COUNT(*) FROM appointments WHERE appointment_date = CURDATE()")->fetchColumn();
 
-// Helper function to format services
 function format_services($services) {
-    // If it's already an array from JSON, join it
     if (is_array($services)) {
         return implode(', ', $services);
     }
-    // If it's a JSON string, decode it
     $decoded = json_decode($services, true);
     if ($decoded && is_array($decoded)) {
         return implode(', ', $decoded);
     }
-    // If it's comma-separated, return as is
     return $services;
 }
 
-// Helper function for status badge CSS class
 function get_status_class($status) {
     switch ($status) {
         case 'pending': return 'status-pending';
@@ -164,7 +155,6 @@ function get_status_class($status) {
         </div>
     <?php endif; ?>
 
-    <!-- Statistics Cards -->
     <div class="stats-container">
         <div class="stat-card total">
             <div class="stat-icon"><i class="fa-solid fa-calendar-days"></i></div>
@@ -196,7 +186,6 @@ function get_status_class($status) {
         </div>
     </div>
 
-    <!-- Filters -->
     <div class="filters-container">
         <form method="GET" class="filters-form">
             <div class="filter-group">
@@ -230,7 +219,6 @@ function get_status_class($status) {
         </form>
     </div>
 
-    <!-- Appointments Table -->
     <div class="appointments-container">
         <h3>Appointments (<?php echo count($appointments); ?> found)</h3>
         
@@ -308,7 +296,6 @@ function get_status_class($status) {
     </div>
 </div>
 
-<!-- Comments Modal -->
 <div id="commentsModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">

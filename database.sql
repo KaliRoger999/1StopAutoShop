@@ -36,7 +36,7 @@ INSERT INTO users (username, password) VALUES
 
 INSERT INTO appointment_counter (id, counter) VALUES (1, 1);
 
--- TEST APPOINTMENTS TO PUT AS INITIAL APPOINTMENTS IN THE DATABASE
+-- ================ TEST APPOINTMENTS TO PUT AS INITIAL APPOINTMENTS IN THE DATABASE ===============
 INSERT INTO appointments 
 (appointment_id, name, email, phone, appointment_date, appointment_time, services, vehicle_year, vehicle_make, vehicle_model, comments, status) 
 VALUES 

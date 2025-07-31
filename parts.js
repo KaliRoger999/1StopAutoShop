@@ -175,7 +175,6 @@ function updateMakes() {
     
     const selectedYear = yearSelect.value;
     
-    // Reset make and model dropdowns
     makeSelect.innerHTML = '<option value="">Select Make</option>';
     modelSelect.innerHTML = '<option value="">Select Model</option>';
     modelSelect.disabled = true;
@@ -203,7 +202,6 @@ function updateModels() {
     const selectedYear = yearSelect.value;
     const selectedMake = makeSelect.value;
     
-    // Reset model dropdown
     modelSelect.innerHTML = '<option value="">Select Model</option>';
     
     if (selectedYear && selectedMake && vehicleData[selectedYear] && vehicleData[selectedYear][selectedMake]) {
@@ -235,14 +233,12 @@ function saveVehiclePreferences() {
         
         localStorage.setItem('savedVehicle', JSON.stringify(vehicleInfo));
         
-        // Show saved message
         const savedMessage = document.getElementById('saved-message');
         savedMessage.classList.add('show');
         setTimeout(() => {
             savedMessage.classList.remove('show');
         }, 2000);
         
-        // Update display
         updateVehicleDisplay(vehicleInfo);
     } else {
         alert('Please select year, make, and model before saving.');
@@ -255,7 +251,6 @@ function loadSavedVehicle() {
     if (savedVehicle) {
         const vehicleInfo = JSON.parse(savedVehicle);
         
-        // Set the dropdown values
         document.getElementById('year-select').value = vehicleInfo.year;
         updateMakes();
         
@@ -268,7 +263,6 @@ function loadSavedVehicle() {
             }, 100);
         }, 100);
         
-        // Update display
         updateVehicleDisplay(vehicleInfo);
     }
 }

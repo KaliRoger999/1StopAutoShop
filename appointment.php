@@ -5,33 +5,29 @@ $form_valid = false;
 $error_messages = array();
 $appointment_saved = false;
 
-// Function to create unique appointment ID
+// ============= FUNCTION THAT SETS APT ID FOR EACH UNIQUE APPOINTMENT ================= //
 function create_appointment_id() {
     $pdo = db_connect();
     
-    // Get current counter
     $sql = "SELECT counter FROM appointment_counter WHERE id = 1";
     $result = $pdo->query($sql)->fetch();
     
     if (!$result) {
-        // Create counter if it doesn't exist
         $pdo->query("INSERT INTO appointment_counter (id, counter) VALUES (1, 1)");
         $counter = 1;
     } else {
         $counter = $result['counter'];
     }
     
-    // Make appointment ID
     $appointment_id = 'APT-' . date('Y') . '-' . sprintf('%06d', $counter);
     
-    // Update counter for next time
     $new_counter = $counter + 1;
     $pdo->query("UPDATE appointment_counter SET counter = $new_counter WHERE id = 1");
     
     return $appointment_id;
 }
 
-// Function to save appointment to database
+// ================ Function to call when appointment form is valid to database ===================== //
 function save_appointment($data) {
     $pdo = db_connect();
     
@@ -39,7 +35,6 @@ function save_appointment($data) {
     
     $stmt = $pdo->prepare($sql);
     
-    // Convert services array to text
     $services_text = implode(',', $data['services']);
     
     $result = $stmt->execute([
@@ -59,11 +54,10 @@ function save_appointment($data) {
     return $result;
 }
 
-// Check if form was submitted
+// ========== FORM VALIDATOIN PART =================== //
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $form_valid = true;
     
-    // Validate name
     $name = $_POST['name'] ?? '';
     if (empty($name)) {
         $error_messages['name'] = "⚠️ Please enter your full name.";
@@ -73,7 +67,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $form_valid = false;
     }
     
-    // Validate email
     $email = $_POST['email'] ?? '';
     if (empty($email)) {
         $error_messages['email'] = "⚠️ Please enter your email address.";
@@ -83,7 +76,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $form_valid = false;
     }
     
-    // Validate phone
     $phone = $_POST['phone'] ?? '';
     if (empty($phone)) {
         $error_messages['phone'] = "⚠️ Please enter your phone number.";
@@ -93,7 +85,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $form_valid = false;
     }
     
-    // Validate date
     $date = $_POST['date'] ?? '';
     if (empty($date)) {
         $error_messages['date'] = "⚠️ Please select an appointment date.";
@@ -107,21 +98,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
     
-    // Validate time
     $time = $_POST['time'] ?? '';
     if (empty($time)) {
         $error_messages['time'] = "⚠️ Please select an appointment time.";
         $form_valid = false;
     }
     
-    // Validate services
     $services = $_POST['services'] ?? [];
     if (empty($services)) {
         $error_messages['services'] = "⚠️ Please select at least one service.";
         $form_valid = false;
     }
     
-    // Validate vehicle year
     $vehicle_year = $_POST['vehicle_year'] ?? '';
     if (empty($vehicle_year)) {
         $error_messages['vehicle_year'] = "⚠️ Please enter your vehicle year.";
@@ -131,7 +119,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $form_valid = false;
     }
     
-    // Validate vehicle make
     $vehicle_make = $_POST['vehicle_make'] ?? '';
     if (empty($vehicle_make)) {
         $error_messages['vehicle_make'] = "⚠️ Please enter your vehicle make.";
@@ -141,7 +128,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $form_valid = false;
     }
     
-    // Validate vehicle model
     $vehicle_model = $_POST['vehicle_model'] ?? '';
     if (empty($vehicle_model)) {
         $error_messages['vehicle_model'] = "⚠️ Please enter your vehicle model.";
@@ -153,7 +139,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $comments = $_POST['comments'] ?? '';
     
-    // If form is valid, save appointment
     if ($form_valid) {
         $appointment_id = create_appointment_id();
         
@@ -175,7 +160,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Function to show error messages
 function show_error_message($field) {
     global $error_messages;
     if (isset($error_messages[$field])) {
@@ -235,7 +219,6 @@ function show_error_message($field) {
     <h1>📅 Book Your Appointment</h1>
     
     <?php if ($appointment_saved): ?>
-        <!-- Success Message -->
         <div class='results'>
             <div class='result-text'>
                 <h2>✅ Appointment Confirmation</h2>
@@ -279,9 +262,7 @@ function show_error_message($field) {
             </div>
         </div>
     <?php else: ?>
-        <!-- Appointment Form -->
         <form method="POST" action="appointment.php" id="appointmentForm">
-            <!-- Personal Information -->
             <div class="form-row">
                 <div class="form-group">
                     <label for="name">Full Name *</label>
@@ -301,7 +282,6 @@ function show_error_message($field) {
                 <?php show_error_message('phone'); ?>
             </div>
 
-            <!-- Appointment Details -->
             <div class="form-row">
                 <div class="form-group">
                     <label for="date">Preferred Date *</label>
@@ -327,7 +307,6 @@ function show_error_message($field) {
                 </div>
             </div>
 
-            <!-- Services -->
             <div class="form-group">
                 <label>🔧 Services Needed * (Select all that apply)</label>
                 <div class="checkbox-group">
@@ -342,7 +321,6 @@ function show_error_message($field) {
                 <?php show_error_message('services'); ?>
             </div>
 
-            <!-- Vehicle Information -->
             <div class="form-row">
                 <div class="form-group">
                     <label for="vehicle_year">Vehicle Year *</label>

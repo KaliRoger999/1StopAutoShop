@@ -1,4 +1,4 @@
-/* ================== appointment.php enhanced css styles ================= */
+/* ================== appointment.php css styles ================= */
 
 .appointment-container {
     max-width: 800px;
@@ -31,7 +31,6 @@
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Form styling */
 .appointment-container form {
     display: grid;
     gap: 1.5rem;
@@ -83,14 +82,12 @@
     transform: translateY(-1px);
 }
 
-/* Placeholder styling */
 .form-group input::placeholder,
 .form-group textarea::placeholder {
     color: #888;
     opacity: 0.8;
 }
 
-/* Checkbox group styling */
 .checkbox-group {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -132,7 +129,6 @@
     font-weight: 500;
 }
 
-/* Button styling */
 .appointmentBtnPhp {
     background: linear-gradient(135deg, #4091aecb 0%, #5ccbf3cb 100%);
     color: #1f2c34;
@@ -161,7 +157,6 @@
     box-shadow: 0 4px 15px rgba(188, 3, 43, 0.3);
 }
 
-/* Button container */
 .appointment-container form > .appointmentBtnPhp:last-of-type {
     margin-top: 1rem;
 }
@@ -187,7 +182,6 @@
     box-shadow: 0 8px 25px rgba(73, 80, 87, 0.4);
 }
 
-/* Validation message styling */
 .failure-message {
     background: linear-gradient(135deg, #bc032b 0%, #d63447 100%);
     color: white;
@@ -210,7 +204,6 @@
     }
 }
 
-/* Success results styling */
 .results {
     background: #28a745;
     color: white;
@@ -276,7 +269,6 @@
     border-left: 3px solid #fff;
 }
 
-/* Form validation states */
 .form-group.valid input,
 .form-group.valid select,
 .form-group.valid textarea {
@@ -298,7 +290,6 @@
     75% { transform: translateX(5px); }
 }
 
-/* Loading states */
 .appointmentBtnPhp.loading {
     pointer-events: none;
     opacity: 0.7;
@@ -347,7 +338,7 @@
     .form-group select,
     .form-group textarea {
         padding: 0.9rem;
-        font-size: 16px; /* Prevents zoom on iOS */
+        font-size: 16px;
     }
 }
 
@@ -360,7 +351,6 @@
         padding: 3rem;
     }
     
-    /* Two column layout for some fields */
     .form-row {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -372,7 +362,6 @@
     }
 }
 
-/* Focus indicators for keyboard navigation */
 .form-group input:focus-visible,
 .form-group select:focus-visible,
 .form-group textarea:focus-visible,
