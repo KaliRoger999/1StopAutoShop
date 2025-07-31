@@ -38,7 +38,6 @@
     box-shadow: 0 8px 25px rgba(188, 3, 43, 0.4);
 }
 
-/* Success and Error Messages */
 .success-message, .error-message {
     padding: 1rem;
     border-radius: 15px;
@@ -80,11 +79,6 @@
     gap: 1rem;
     transition: all 0.3s ease;
     border-left: 4px solid;
-}
-
-.stat-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
 }
 
 .stat-card.total { border-left-color: #5ccbf3cb; }
@@ -220,7 +214,6 @@
     margin: 0;
     padding: 1.5rem;
     font-size: 1.5rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 /* No Appointments State */
