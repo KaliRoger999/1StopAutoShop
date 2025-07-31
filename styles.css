@@ -1,3 +1,6 @@
+html{
+    scroll-behavior: smooth;
+}
 body {
     /* max-width: 1100px; */
     margin: auto;
@@ -79,7 +82,8 @@ i{
 .desktopBars a{
     text-decoration: none;
     color: black;
-    padding: 2rem;  
+    padding: 1rem;  
+    margin: 0.5rem;
 }
 .desktopBars a:hover {
     background-color: rgb(136, 135, 133);
@@ -266,22 +270,115 @@ h4{
 }
 
 /* ALL NEW CSS STYLES FOR 2030 MUST BE MADE HERE!!!!!! */
-.appointmentBtnPhp{
-    background-color: blue;
-    color: black;
+/* ================== index.html css styles ================= */
+#logInBtn{
     background-color: #4091aecb;
     padding: 1rem;
-    transition: 0.25s;
-    border-radius: 20px;
-    font-family: 'Kanit';
-    border: none;
-    cursor: pointer;
+    border-radius: 25px;
 }
-.appointmentBtnPhp:hover{
+#logInBtn:hover{
     background-color: #bc032b;
     color: white;
     transition: 0.25s;
 }
+
+
+/* ================== parts.html css styles ================= */
+        .vehicle-selector {
+            background-color: #7d8383;
+            padding: 2rem;
+            margin: 2rem 1rem;
+            border-radius: 20px;
+            color: white;
+        }
+        
+        .selector-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: end;
+            justify-content: center;
+        }
+        
+        .dropdown-group {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            min-width: 150px;
+        }
+        
+        .dropdown-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #5ccbf3cb;
+        }
+        
+        .dropdown-group select {
+            padding: 0.75rem;
+            border: none;
+            border-radius: 10px;
+            background-color: rgb(218,217,212);
+            font-family: "Kanit";
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        
+        .dropdown-group select:focus {
+            outline: 2px solid #5ccbf3cb;
+        }
+        
+        .save-btn {
+            background-color: #4091aecb;
+            color: black;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-family: "Kanit";
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.25s;
+            height: fit-content;
+        }
+        
+        .save-btn:hover {
+            background-color: #bc032b;
+            color: white;
+        }
+        
+        .saved-message {
+            color: #5ccbf3cb;
+            margin-left: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .saved-message.show {
+            opacity: 1;
+        }
+        
+        .parts-content {
+            margin: 1rem;
+            text-align: center;
+        }
+        
+        .selected-vehicle {
+            background-color: rgba(31, 44, 52, 255);
+            color: rgb(218,217,212);
+            padding: 1rem;
+            margin: 1rem;
+            border-radius: 15px;
+        }
+        
+        .selected-vehicle h3 {
+            color: #5ccbf3cb;
+            margin-top: 0;
+        }
+        
+        @media all and (min-width: 768px) {
+            
+        }
+/* ============ END =================== */
+
 
 @media all and (min-width:768px) {
     .navbars{

@@ -1,0 +1,604 @@
+/* ================== Enhanced Dashboard CSS ================= */
+
+.dashboard-content {
+    margin: 2rem 1rem;
+    text-align: center;
+}
+        
+.welcome-box {
+    background: linear-gradient(135deg, #7d8383 0%, #6a7070 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 20px;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+        
+.welcome-box h2 {
+    color: #5ccbf3cb;
+    margin-top: 0;
+    font-size: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+        
+.logout-btn {
+    background: linear-gradient(135deg, #bc032b 0%, #d63447 100%);
+    color: white;
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-family: "Kanit", sans-serif;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-block;
+    box-shadow: 0 4px 15px rgba(188, 3, 43, 0.3);
+}
+        
+.logout-btn:hover {
+    background: linear-gradient(135deg, #a02a2a 0%, #c02a3a 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(188, 3, 43, 0.4);
+}
+
+/* Success and Error Messages */
+.success-message, .error-message {
+    padding: 1rem;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.success-message {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+}
+
+.error-message {
+    background: linear-gradient(135deg, #bc032b 0%, #d63447 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(188, 3, 43, 0.3);
+}
+
+/* Statistics Cards */
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    padding: 1.5rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.3s ease;
+    border-left: 4px solid;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.stat-card.total { border-left-color: #5ccbf3cb; }
+.stat-card.pending { border-left-color: #ffc107; }
+.stat-card.confirmed { border-left-color: #28a745; }
+.stat-card.today { border-left-color: #bc032b; }
+
+.stat-icon {
+    background: linear-gradient(135deg, #7d8383 0%, #6a7070 100%);
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 15px rgba(125, 131, 131, 0.3);
+}
+
+.stat-info h3 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1f2c34;
+}
+
+.stat-info p {
+    margin: 0;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+/* Filters */
+.filters-container {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 2rem;
+    border-radius: 20px;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+}
+
+.filters-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    align-items: end;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.filter-group label {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #1f2c34;
+    font-size: 0.9rem;
+}
+
+.filter-group input, .filter-group select {
+    padding: 0.75rem;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    background-color: white;
+    font-family: "Kanit", sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.filter-group input:focus, .filter-group select:focus {
+    outline: none;
+    border-color: #5ccbf3cb;
+    box-shadow: 0 0 0 3px rgba(92, 203, 243, 0.2);
+    transform: translateY(-2px);
+}
+
+.filter-btn, .clear-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 12px;
+    font-family: "Kanit", sans-serif;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    height: fit-content;
+}
+
+.filter-btn {
+    background: linear-gradient(135deg, #4091aecb 0%, #5ccbf3cb 100%);
+    color: #1f2c34;
+    box-shadow: 0 4px 15px rgba(64, 145, 174, 0.3);
+}
+
+.filter-btn:hover {
+    background: linear-gradient(135deg, #bc032b 0%, #d63447 100%);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(188, 3, 43, 0.4);
+}
+
+.clear-btn {
+    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+}
+
+.clear-btn:hover {
+    background: linear-gradient(135deg, #495057 0%, #343a40 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(73, 80, 87, 0.4);
+}
+
+/* Appointments Container */
+.appointments-container {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.appointments-container h3 {
+    background: linear-gradient(135deg, #7d8383 0%, #6a7070 100%);
+    color: #5ccbf3cb;
+    margin: 0;
+    padding: 1.5rem;
+    font-size: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* No Appointments State */
+.no-appointments {
+    padding: 4rem 2rem;
+    text-align: center;
+    color: #6c757d;
+}
+
+.no-appointments i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    color: #dee2e6;
+}
+
+.no-appointments h4 {
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+/* Table Styling */
+.appointments-table-container {
+    overflow-x: auto;
+}
+
+.appointments-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.appointments-table th {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    color: #495057;
+    font-weight: 600;
+    padding: 1rem 0.75rem;
+    text-align: left;
+    border-bottom: 2px solid #dee2e6;
+    white-space: nowrap;
+}
+
+.appointments-table td {
+    padding: 1rem 0.75rem;
+    border-bottom: 1px solid #f1f3f4;
+    vertical-align: top;
+}
+
+.appointments-table tr:hover {
+    background-color: rgba(92, 203, 243, 0.05);
+}
+
+.appointment-id {
+    font-family: monospace;
+    font-weight: 600;
+    color: #4091aecb;
+    font-size: 0.85rem;
+}
+
+.customer-info strong {
+    color: #1f2c34;
+    font-size: 0.95rem;
+}
+
+.customer-info small {
+    color: #6c757d;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.datetime-info {
+    font-weight: 500;
+    color: #495057;
+}
+
+.datetime-info small {
+    color: #6c757d;
+    font-size: 0.8rem;
+}
+
+.services-cell {
+    max-width: 200px;
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-block;
+}
+
+.status-pending {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+.status-confirmed {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.status-completed {
+    background: linear-gradient(135deg, #cce5ff 0%, #b3d9ff 100%);
+    color: #004085;
+    border: 1px solid #b3d9ff;
+}
+
+.status-cancelled {
+    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Actions */
+.actions-cell {
+    white-space: nowrap;
+}
+
+.status-form {
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
+.status-form select {
+    padding: 0.4rem 0.6rem;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-family: "Kanit", sans-serif;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.status-form select:focus {
+    outline: none;
+    border-color: #5ccbf3cb;
+    box-shadow: 0 0 0 2px rgba(92, 203, 243, 0.2);
+}
+
+.view-comments-btn {
+    background: linear-gradient(135deg, #17a2b8 0%, #20c997 100%);
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.8rem;
+}
+
+.view-comments-btn:hover {
+    background: linear-gradient(135deg, #138496 0%, #1e7e34 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(23, 162, 184, 0.3);
+}
+
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    margin: 10% auto;
+    padding: 0;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #7d8383 0%, #6a7070 100%);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 20px 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h4 {
+    margin: 0;
+    color: #5ccbf3cb;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.close {
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.close:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.modal-body {
+    padding: 2rem;
+    line-height: 1.6;
+    color: #495057;
+    font-size: 1rem;
+}
+
+.modal-body p {
+    margin: 0;
+    background-color: rgba(92, 203, 243, 0.1);
+    padding: 1rem;
+    border-radius: 12px;
+    border-left: 4px solid #5ccbf3cb;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dashboard-content {
+        margin: 1rem 0.5rem;
+    }
+    
+    .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .stat-card {
+        padding: 1rem;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .stat-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+    
+    .stat-info h3 {
+        font-size: 1.5rem;
+    }
+    
+    .filters-form {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .filter-btn, .clear-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .appointments-table {
+        font-size: 0.8rem;
+    }
+    
+    .appointments-table th,
+    .appointments-table td {
+        padding: 0.5rem 0.25rem;
+    }
+    
+    .customer-info {
+        min-width: 120px;
+    }
+    
+    .services-cell {
+        max-width: 150px;
+        font-size: 0.75rem;
+    }
+    
+    .actions-cell {
+        min-width: 120px;
+    }
+    
+    .status-form select {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.4rem;
+    }
+    
+    .modal-content {
+        margin: 20% auto;
+        width: 95%;
+    }
+    
+    .modal-header {
+        padding: 1rem;
+    }
+    
+    .modal-body {
+        padding: 1rem;
+    }
+}
+
+@media (min-width: 769px) {
+    .dashboard-content {
+        max-width: 1200px;
+        margin: 2rem auto;
+    }
+    
+    .stats-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .filters-form {
+        grid-template-columns: repeat(5, 1fr);
+    }
+    
+    .appointments-table th,
+    .appointments-table td {
+        padding: 1rem;
+    }
+    
+    .services-cell {
+        max-width: 250px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .appointments-table {
+        font-size: 1rem;
+    }
+    
+    .services-cell {
+        max-width: 300px;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .welcome-box,
+    .filters-container,
+    .actions-cell {
+        display: none;
+    }
+    
+    .appointments-table {
+        font-size: 0.8rem;
+    }
+    
+    .status-badge {
+        background: white !important;
+        border: 1px solid #333 !important;
+        color: #333 !important;
+    }
+}

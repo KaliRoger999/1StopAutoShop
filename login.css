@@ -1,0 +1,74 @@
+/* ================== login.php css styles ================= */
+.login-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #7d8383;
+            border-radius: 20px;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .login-form {
+            color: white;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #5ccbf3cb;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 10px;
+            background-color: rgb(218,217,212);
+            font-family: "Kanit";
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        
+        .form-group input:focus {
+            outline: 2px solid #5ccbf3cb;
+        }
+        
+        .login-btn {
+            width: 100%;
+            background-color: #4091aecb;
+            color: black;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 10px;
+            font-family: "Kanit";
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+        
+        .login-btn:hover {
+            background-color: #bc032b;
+            color: white;
+        }
+        
+        .error-message {
+            background-color: #bc032b;
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .login-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            margin-top: 0;
+            color: #5ccbf3cb;
+        }

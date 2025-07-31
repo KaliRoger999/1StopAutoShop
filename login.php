@@ -1,17 +1,49 @@
+<?php
+session_start();
+require 'database.php';
+
+$error_message = '';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    
+    if (!empty($username) && !empty($password)) {
+        $pdo = db_connect();
+        
+        $sql = "SELECT * FROM users WHERE username = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$username]);
+        $user = $stmt->fetch();
+        
+        if ($user && password_verify($password, $user['password'])) {
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['username'] = $user['username'];
+            header('Location: dashboard.php');
+            exit();
+        } else {
+            $error_message = 'Invalid username or password';
+        }
+    } else {
+        $error_message = 'Please fill in all fields';
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1 Stop Auto-Shop - Parts</title>
+    <title>Login - 1 Stop Auto-Shop</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="index.js" defer></script>
-    <script src="parts.js" defer></script>
+    <link rel="stylesheet" href="login.css">
     <script src="https://kit.fontawesome.com/fd55908e0f.js" crossorigin="anonymous"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
     </style>
 </head>
+
 <header class="fixed">
     <div class="logoAndBar">
         <img src="./images/logo.jpg" alt="logo" style="width: 130px; height: 110px;">
@@ -22,7 +54,6 @@
                 <li class="hideOnMobile"><a href="cars.html">Cars</a></li>
                 <li class="hideOnMobile"><a href="index.html#Services">Services</a></li>
                 <li class="hideOnMobile"><a href="parts.html">Parts</a></li>
-                <li class="hideOnMobile"><a id="logInBtn" href="login.php">Admin Log In</a></li>
             </ul>
         </div>
         <div class="bars" id="hamburger">
@@ -36,7 +67,6 @@
                 <li><a href="cars.html">Cars</a></li>
                 <li><a href="index.html#Services">Services</a></li>
                 <li><a href="parts.html">Parts</a></li>
-                <li class="hideOnMobile" id="logInBtn"><a href="#">Log In</a></li>
             </ul>
         </nav>
     </div>  
@@ -45,59 +75,35 @@
 <body>
 <br><br><br><br><br>
 
-<div class="parts-content">
-    <h1 style="display: flex; justify-content: center;">Auto Parts & Accessories</h1>
-    <p>Find the right parts for your vehicle</p>
-</div>
-
-<div class="vehicle-selector">
-    <h2 style="text-align: center; margin-top: 0;">Select Your Vehicle</h2>
-    <div class="selector-container">
-        <button class="save-btn" onclick="saveVehiclePreferences()">
-            <i class="fa-solid fa-floppy-disk"></i> Save
-        </button>
+<div class="login-container">
+    <div class="login-form">
+        <h2 class="login-title">Login to Admin Panel</h2>
         
-        <div class="dropdown-group">
-            <label for="year-select">Year</label>
-            <select id="year-select" onchange="updateMakes()">
-                <option value="">Select Year</option>
-            </select>
-        </div>
+        <?php if ($error_message): ?>
+            <div class="error-message">
+                <?php echo $error_message; ?>
+            </div>
+        <?php endif; ?>
         
-        <div class="dropdown-group">
-            <label for="make-select">Make</label>
-            <select id="make-select" onchange="updateModels()" disabled>
-                <option value="">Select Make</option>
-            </select>
-        </div>
-        
-        <div class="dropdown-group">
-            <label for="model-select">Model</label>
-            <select id="model-select" disabled>
-                <option value="">Select Model</option>
-            </select>
-        </div>
-        
-        <span class="saved-message" id="saved-message">
-            <i class="fa-solid fa-check-circle"></i> Saved!
-        </span>
+        <form method="POST" action="login.php">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <button type="submit" class="login-btn">
+                <i class="fa-solid fa-sign-in-alt"></i> Login
+            </button>
+        </form>
     </div>
 </div>
 
-<div class="selected-vehicle" id="selected-vehicle" style="display: none;">
-    <h3>Your Selected Vehicle:</h3>
-    <p id="vehicle-display"></p>
-    <small>This information is saved for your next visit</small>
-</div>
-
-<div class="parts-content">
-    <div style="background-color: rgba(31, 44, 52, 255); color: rgb(218,217,212); padding: 2rem; border-radius: 20px; margin-top: 2rem;">
-        <h2 style="color: #5ccbf3cb; margin-top: 0;">Coming Soon!</h2>
-        <br>
-        <a href="appointment.php" class="appointmentBtn">Contact Us for Parts Inquiries</a>
-    </div>
-</div>
-
+<script src="index.js"></script>
 </body>
 
 <footer>
@@ -130,4 +136,5 @@
         <i class="fa-brands fa-tiktok"></i>
     </div>
 </footer>
+
 </html>
