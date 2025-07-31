@@ -1,3 +1,5 @@
+// ================= PLANNING TO USE AN API FOR THIS FILE SOON SO THAT I DON'T NEED TO HARDCODE THE OBJECTS IN THE FILE ==================== //
+
 const vehicleData = {
   2025: {
     "Honda": ["Civic", "Accord", "CR-V", "Pilot", "HR-V", "Passport", "Ridgeline", "Odyssey"],

@@ -136,5 +136,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <i class="fa-brands fa-tiktok"></i>
     </div>
 </footer>
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        window.alert("Username is: admin; Password is: password");
+    });
+</script>
 
 </html>
