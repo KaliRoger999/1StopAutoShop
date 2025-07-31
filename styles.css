@@ -100,13 +100,13 @@ i{
 .appointmentBtn{ /* appointment button */
     text-decoration: none;
     color: black;
-    background-color: #4091aecb;
+    background: linear-gradient(135deg, #4091aecb 0%, #5ccbf3cb 100%);
     padding: 1rem;
     transition: 0.25s;
     border-radius: 20px;
 }
 .appointmentBtn:hover{
-    background-color: #bc032b;
+    background: linear-gradient(135deg, #bc032b 0%, #d63447 100%);
     color: white;
     transition: 0.25s;
 }

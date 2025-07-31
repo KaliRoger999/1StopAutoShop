@@ -2,96 +2,140 @@
 session_start();
 require_once 'database.php';
 
+// Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();
 }
 
 $username = $_SESSION['username'];
+$success_message = '';
+$error_message = '';
 
-// Handle status updates
+// Handle appointment status updates
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_status'])) {
     $appointment_id = $_POST['appointment_id'];
     $new_status = $_POST['status'];
     
     try {
         $pdo = db_connect();
-        $stmt = $pdo->prepare("UPDATE appointments SET status = ? WHERE id = ?");
-        $stmt->execute([$new_status, $appointment_id]);
-        $success_message = "Appointment status updated successfully!";
-    } catch (PDOException $e) {
+        
+        // Simple update query
+        $sql = "UPDATE appointments SET status = '$new_status' WHERE id = $appointment_id";
+        $result = $pdo->exec($sql);
+        
+        if ($result) {
+            $success_message = "Appointment status updated successfully!";
+        } else {
+            $error_message = "Failed to update appointment status.";
+        }
+    } catch (Exception $e) {
         $error_message = "Error updating appointment: " . $e->getMessage();
     }
 }
 
-// Get filter parameters
-$status_filter = $_GET['status'] ?? 'all';
-$date_filter = $_GET['date'] ?? '';
-$search = $_GET['search'] ?? '';
+// Get filter values from URL
+$status_filter = '';
+$date_filter = '';
+$search = '';
 
-// Build query with filters
-$where_conditions = [];
-$params = [];
-
-if ($status_filter !== 'all') {
-    $where_conditions[] = "status = ?";
-    $params[] = $status_filter;
+if (isset($_GET['status'])) {
+    $status_filter = $_GET['status'];
+}
+if (isset($_GET['date'])) {
+    $date_filter = $_GET['date'];
+}
+if (isset($_GET['search'])) {
+    $search = $_GET['search'];
 }
 
-if (!empty($date_filter)) {
-    $where_conditions[] = "appointment_date = ?";
-    $params[] = $date_filter;
+// Build the main query with filters
+$pdo = db_connect();
+
+// Start with basic query
+$sql = "SELECT * FROM appointments WHERE 1=1";
+
+// Add filters one by one
+if ($status_filter != '' && $status_filter != 'all') {
+    $sql .= " AND status = '$status_filter'";
 }
 
-if (!empty($search)) {
-    $where_conditions[] = "(name LIKE ? OR email LIKE ? OR appointment_id LIKE ? OR vehicle_make LIKE ? OR vehicle_model LIKE ?)";
-    $search_param = "%$search%";
-    $params = array_merge($params, [$search_param, $search_param, $search_param, $search_param, $search_param]);
+if ($date_filter != '') {
+    $sql .= " AND appointment_date = '$date_filter'";
 }
 
-$where_clause = !empty($where_conditions) ? "WHERE " . implode(" AND ", $where_conditions) : "";
-
-try {
-    $pdo = db_connect();
-    
-    // Get appointments with filters
-    $sql = "SELECT * FROM appointments $where_clause ORDER BY created_at DESC";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute($params);
-    $appointments = $stmt->fetchAll();
-    
-    // Get statistics
-    $stats_sql = "SELECT 
-        COUNT(*) as total,
-        SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) as pending,
-        SUM(CASE WHEN status = 'confirmed' THEN 1 ELSE 0 END) as confirmed,
-        SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) as completed,
-        SUM(CASE WHEN status = 'cancelled' THEN 1 ELSE 0 END) as cancelled,
-        SUM(CASE WHEN appointment_date = CURDATE() THEN 1 ELSE 0 END) as today
-        FROM appointments";
-    $stats_stmt = $pdo->prepare($stats_sql);
-    $stats_stmt->execute();
-    $stats = $stats_stmt->fetch();
-    
-} catch (PDOException $e) {
-    $error_message = "Database error: " . $e->getMessage();
+if ($search != '') {
+    $sql .= " AND (name LIKE '%$search%' OR email LIKE '%$search%' OR appointment_id LIKE '%$search%' OR vehicle_make LIKE '%$search%' OR vehicle_model LIKE '%$search%')";
 }
 
+// Order by newest first
+$sql .= " ORDER BY created_at DESC";
+
+// Execute the query
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$appointments = $stmt->fetchAll();
+
+// Get statistics with separate queries
+$total_sql = "SELECT COUNT(*) as count FROM appointments";
+$total_stmt = $pdo->prepare($total_sql);
+$total_stmt->execute();
+$total_count = $total_stmt->fetch()['count'];
+
+$pending_sql = "SELECT COUNT(*) as count FROM appointments WHERE status = 'pending'";
+$pending_stmt = $pdo->prepare($pending_sql);
+$pending_stmt->execute();
+$pending_count = $pending_stmt->fetch()['count'];
+
+$confirmed_sql = "SELECT COUNT(*) as count FROM appointments WHERE status = 'confirmed'";
+$confirmed_stmt = $pdo->prepare($confirmed_sql);
+$confirmed_stmt->execute();
+$confirmed_count = $confirmed_stmt->fetch()['count'];
+
+$completed_sql = "SELECT COUNT(*) as count FROM appointments WHERE status = 'completed'";
+$completed_stmt = $pdo->prepare($completed_sql);
+$completed_stmt->execute();
+$completed_count = $completed_stmt->fetch()['count'];
+
+$cancelled_sql = "SELECT COUNT(*) as count FROM appointments WHERE status = 'cancelled'";
+$cancelled_stmt = $pdo->prepare($cancelled_sql);
+$cancelled_stmt->execute();
+$cancelled_count = $cancelled_stmt->fetch()['count'];
+
+$today_sql = "SELECT COUNT(*) as count FROM appointments WHERE appointment_date = CURDATE()";
+$today_stmt = $pdo->prepare($today_sql);
+$today_stmt->execute();
+$today_count = $today_stmt->fetch()['count'];
+
+// Helper function to format services
 function format_services($services_json) {
-    $services = json_decode($services_json, true);
-    if (is_array($services)) {
-        return implode(', ', $services);
+    // Try to decode JSON, if it fails just return as is
+    $services_array = json_decode($services_json, true);
+    if ($services_array && is_array($services_array)) {
+        $formatted = '';
+        for ($i = 0; $i < count($services_array); $i++) {
+            if ($i > 0) {
+                $formatted .= ', ';
+            }
+            $formatted .= $services_array[$i];
+        }
+        return $formatted;
     }
     return $services_json;
 }
 
+// Helper function to get status badge class
 function get_status_badge_class($status) {
-    switch ($status) {
-        case 'pending': return 'status-pending';
-        case 'confirmed': return 'status-confirmed';
-        case 'completed': return 'status-completed';
-        case 'cancelled': return 'status-cancelled';
-        default: return 'status-pending';
+    if ($status == 'pending') {
+        return 'status-pending';
+    } else if ($status == 'confirmed') {
+        return 'status-confirmed';
+    } else if ($status == 'completed') {
+        return 'status-completed';
+    } else if ($status == 'cancelled') {
+        return 'status-cancelled';
+    } else {
+        return 'status-pending';
     }
 }
 ?>
@@ -105,6 +149,7 @@ function get_status_badge_class($status) {
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="dashboard.css">
     <script src="index.js" defer></script>
+    <script src="dashboard.js" defer></script>
     <script src="https://kit.fontawesome.com/fd55908e0f.js" crossorigin="anonymous"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
@@ -147,19 +192,19 @@ function get_status_badge_class($status) {
 <div class="dashboard-content">
     <div class="welcome-box">
         <h2>Admin Dashboard</h2>
-        <p>Welcome back, <?php echo htmlspecialchars($username); ?>!</p>
+        <p>Welcome back, <?php echo $username; ?>!</p>
         <a href="logout.php" class="logout-btn">
             <i class="fa-solid fa-sign-out-alt"></i> Logout
         </a>
     </div>
 
-    <?php if (isset($success_message)): ?>
+    <?php if ($success_message != ''): ?>
         <div class="success-message">
             <i class="fa-solid fa-check-circle"></i> <?php echo $success_message; ?>
         </div>
     <?php endif; ?>
 
-    <?php if (isset($error_message)): ?>
+    <?php if ($error_message != ''): ?>
         <div class="error-message">
             <i class="fa-solid fa-exclamation-triangle"></i> <?php echo $error_message; ?>
         </div>
@@ -170,28 +215,28 @@ function get_status_badge_class($status) {
         <div class="stat-card total">
             <div class="stat-icon"><i class="fa-solid fa-calendar-days"></i></div>
             <div class="stat-info">
-                <h3><?php echo $stats['total']; ?></h3>
+                <h3><?php echo $total_count; ?></h3>
                 <p>Total Appointments</p>
             </div>
         </div>
         <div class="stat-card pending">
             <div class="stat-icon"><i class="fa-solid fa-clock"></i></div>
             <div class="stat-info">
-                <h3><?php echo $stats['pending']; ?></h3>
+                <h3><?php echo $pending_count; ?></h3>
                 <p>Pending</p>
             </div>
         </div>
         <div class="stat-card confirmed">
             <div class="stat-icon"><i class="fa-solid fa-check"></i></div>
             <div class="stat-info">
-                <h3><?php echo $stats['confirmed']; ?></h3>
+                <h3><?php echo $confirmed_count; ?></h3>
                 <p>Confirmed</p>
             </div>
         </div>
         <div class="stat-card today">
             <div class="stat-icon"><i class="fa-solid fa-calendar-day"></i></div>
             <div class="stat-info">
-                <h3><?php echo $stats['today']; ?></h3>
+                <h3><?php echo $today_count; ?></h3>
                 <p>Today</p>
             </div>
         </div>
@@ -203,22 +248,22 @@ function get_status_badge_class($status) {
             <div class="filter-group">
                 <label for="status">Status:</label>
                 <select name="status" id="status">
-                    <option value="all" <?php echo $status_filter === 'all' ? 'selected' : ''; ?>>All Status</option>
-                    <option value="pending" <?php echo $status_filter === 'pending' ? 'selected' : ''; ?>>Pending</option>
-                    <option value="confirmed" <?php echo $status_filter === 'confirmed' ? 'selected' : ''; ?>>Confirmed</option>
-                    <option value="completed" <?php echo $status_filter === 'completed' ? 'selected' : ''; ?>>Completed</option>
-                    <option value="cancelled" <?php echo $status_filter === 'cancelled' ? 'selected' : ''; ?>>Cancelled</option>
+                    <option value="all" <?php if ($status_filter == 'all' || $status_filter == '') echo 'selected'; ?>>All Status</option>
+                    <option value="pending" <?php if ($status_filter == 'pending') echo 'selected'; ?>>Pending</option>
+                    <option value="confirmed" <?php if ($status_filter == 'confirmed') echo 'selected'; ?>>Confirmed</option>
+                    <option value="completed" <?php if ($status_filter == 'completed') echo 'selected'; ?>>Completed</option>
+                    <option value="cancelled" <?php if ($status_filter == 'cancelled') echo 'selected'; ?>>Cancelled</option>
                 </select>
             </div>
             
             <div class="filter-group">
                 <label for="date">Date:</label>
-                <input type="date" name="date" id="date" value="<?php echo htmlspecialchars($date_filter); ?>">
+                <input type="date" name="date" id="date" value="<?php echo $date_filter; ?>">
             </div>
             
             <div class="filter-group">
                 <label for="search">Search:</label>
-                <input type="text" name="search" id="search" placeholder="Name, email, ID..." value="<?php echo htmlspecialchars($search); ?>">
+                <input type="text" name="search" id="search" placeholder="Name, email, ID..." value="<?php echo $search; ?>">
             </div>
             
             <button type="submit" class="filter-btn">
@@ -235,7 +280,7 @@ function get_status_badge_class($status) {
     <div class="appointments-container">
         <h3>Appointments (<?php echo count($appointments); ?> found)</h3>
         
-        <?php if (empty($appointments)): ?>
+        <?php if (count($appointments) == 0): ?>
             <div class="no-appointments">
                 <i class="fa-solid fa-calendar-xmark"></i>
                 <h4>No appointments found</h4>
@@ -256,14 +301,18 @@ function get_status_badge_class($status) {
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($appointments as $appointment): ?>
+                        <?php 
+                        // Loop through each appointment
+                        for ($i = 0; $i < count($appointments); $i++) {
+                            $appointment = $appointments[$i];
+                        ?>
                             <tr>
-                                <td class="appointment-id"><?php echo htmlspecialchars($appointment['appointment_id']); ?></td>
+                                <td class="appointment-id"><?php echo $appointment['appointment_id']; ?></td>
                                 <td>
                                     <div class="customer-info">
-                                        <strong><?php echo htmlspecialchars($appointment['name']); ?></strong><br>
-                                        <small><?php echo htmlspecialchars($appointment['email']); ?></small><br>
-                                        <small><?php echo htmlspecialchars($appointment['phone']); ?></small>
+                                        <strong><?php echo $appointment['name']; ?></strong><br>
+                                        <small><?php echo $appointment['email']; ?></small><br>
+                                        <small><?php echo $appointment['phone']; ?></small>
                                     </div>
                                 </td>
                                 <td>
@@ -273,10 +322,10 @@ function get_status_badge_class($status) {
                                     </div>
                                 </td>
                                 <td>
-                                    <?php echo htmlspecialchars($appointment['vehicle_year'] . ' ' . $appointment['vehicle_make'] . ' ' . $appointment['vehicle_model']); ?>
+                                    <?php echo $appointment['vehicle_year'] . ' ' . $appointment['vehicle_make'] . ' ' . $appointment['vehicle_model']; ?>
                                 </td>
                                 <td class="services-cell">
-                                    <?php echo htmlspecialchars(format_services($appointment['services'])); ?>
+                                    <?php echo format_services($appointment['services']); ?>
                                 </td>
                                 <td>
                                     <span class="status-badge <?php echo get_status_badge_class($appointment['status']); ?>">
@@ -287,21 +336,21 @@ function get_status_badge_class($status) {
                                     <form method="POST" class="status-form">
                                         <input type="hidden" name="appointment_id" value="<?php echo $appointment['id']; ?>">
                                         <select name="status" onchange="this.form.submit()">
-                                            <option value="pending" <?php echo $appointment['status'] === 'pending' ? 'selected' : ''; ?>>Pending</option>
-                                            <option value="confirmed" <?php echo $appointment['status'] === 'confirmed' ? 'selected' : ''; ?>>Confirmed</option>
-                                            <option value="completed" <?php echo $appointment['status'] === 'completed' ? 'selected' : ''; ?>>Completed</option>
-                                            <option value="cancelled" <?php echo $appointment['status'] === 'cancelled' ? 'selected' : ''; ?>>Cancelled</option>
+                                            <option value="pending" <?php if ($appointment['status'] == 'pending') echo 'selected'; ?>>Pending</option>
+                                            <option value="confirmed" <?php if ($appointment['status'] == 'confirmed') echo 'selected'; ?>>Confirmed</option>
+                                            <option value="completed" <?php if ($appointment['status'] == 'completed') echo 'selected'; ?>>Completed</option>
+                                            <option value="cancelled" <?php if ($appointment['status'] == 'cancelled') echo 'selected'; ?>>Cancelled</option>
                                         </select>
                                         <input type="hidden" name="update_status" value="1">
                                     </form>
-                                    <?php if (!empty($appointment['comments'])): ?>
-                                        <button class="view-comments-btn" onclick="showComments('<?php echo htmlspecialchars($appointment['comments']); ?>')">
+                                    <?php if ($appointment['comments'] != ''): ?>
+                                        <button class="view-comments-btn" onclick="showComments('<?php echo addslashes($appointment['comments']); ?>')">
                                             <i class="fa-solid fa-comment"></i>
                                         </button>
                                     <?php endif; ?>
                                 </td>
                             </tr>
-                        <?php endforeach; ?>
+                        <?php } ?>
                     </tbody>
                 </table>
             </div>
@@ -322,56 +371,7 @@ function get_status_badge_class($status) {
     </div>
 </div>
 
-<script>
-function showComments(comments) {
-    document.getElementById('commentsText').textContent = comments;
-    document.getElementById('commentsModal').style.display = 'block';
-}
-
-function closeModal() {
-    document.getElementById('commentsModal').style.display = 'none';
-}
-
-// Close modal when clicking outside
-window.onclick = function(event) {
-    var modal = document.getElementById('commentsModal');
-    if (event.target == modal) {
-        modal.style.display = 'none';
-    }
-}
-</script>
 
 </body>
-
-<footer>
-    <div class="midContentFour footer">
-        <h2 style="text-align: center;">Get in Touch</h2>
-        <div class="horizon">
-            <div class="contInfo">
-                <i class="fa-solid fa-location-dot"></i> <span style="margin-left: 1rem;">123 Main Street, Auto City, Canada</span>
-                <br><br>
-                <i class="fa-solid fa-phone"></i><span style="margin-left: 1rem;">123-456-7890</span>
-                <br><br>
-                <i class="fa-regular fa-envelope"></i><span style="margin-left: 1rem;">info@1stopautoshop.com</span>
-            </div>
-            <br><br>
-            <div>
-                <h3 style="margin-top: 0;">Quick Links</h3>
-                <ul class="footerLinks">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="cars.html">Cars</a></li>
-                    <li><a href="index.html#Services">Services</a></li>
-                    <li><a href="parts.html">Parts</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="logoLinks">
-        <i class="fa-brands fa-facebook"></i> 
-        <i class="fa-brands fa-instagram"></i>
-        <i class="fa-brands fa-x-twitter"></i>
-        <i class="fa-brands fa-tiktok"></i>
-    </div>
-</footer>
 
 </html>
